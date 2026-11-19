@@ -1,7 +1,0 @@
-# Requirements for the virtual environment with python 3.12.13
-autogluon==1.6.3
-joblib==1.6.0
-numpy==2.4.6
-pandas==2.3.3
-scikit-learn==1.9.1
-scipy==1.15.3

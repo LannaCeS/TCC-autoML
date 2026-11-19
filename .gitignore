@@ -1,7 +1,4 @@
 # Python environments
-/venv-autogluon/
-/venv10/
-/venv11/
 /.venv/
 /venv/
 
@@ -10,8 +7,6 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 
-# Generated AutoGluon models
-**/AutogluonModels/
 
 # Local logs
 *.log

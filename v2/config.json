@@ -1,0 +1,61 @@
+{
+  "protocol_version": "2.4",
+  "frameworks": [
+    "autogluon",
+    "tpot",
+    "pycaret",
+    "flaml",
+    "h2o"
+  ],
+  "scenarios": [
+    "baseline",
+    "random_over",
+    "smote",
+    "editednearestneighbors",
+    "tomeklinks",
+    "smoteenn",
+    "smotetomek",
+    "class_weighted"
+  ],
+  "seeds": [
+    42,
+    101,
+    223,
+    302,
+    404
+  ],
+  "primary_metric": "f1_macro",
+  "search_budget_seconds": 1800,
+  "preprocessing_budget_seconds": 1800,
+  "postprocessing_budget_seconds": 900,
+  "qualification_native_search_seconds": 60,
+  "cpus": 8,
+  "memory_gib": 16,
+  "test_group_fraction": 0.2,
+  "validation_group_fraction_within_development": 0.2,
+  "h2o_blending_fraction_of_training": 0.2,
+  "h2o_require_stacked_candidate": true,
+  "native_search_budget_fraction": 0.9,
+  "h2o_policy": "native_custom_loss_1_minus_macro_f1; five base families plus StackedEnsemble; group-disjoint blending carved from training before preprocessing; GLM may retain internal AUTO; threshold 0.5",
+  "threshold_policy": "native_predict; H2O uses p1 > 0.5, with ties assigned to class 0; no tuning on test",
+  "refit_policy": "Keep selected training-only model; TPOT and PyCaret selected instances refitted on the same training data",
+  "smoke": false,
+  "execution_slots": [
+    "0-7",
+    "8-15",
+    "32-39",
+    "40-47"
+  ],
+  "class_weight_policy": "All five frameworks support balanced training weights; PyCaret and TPOT use the same weight-compatible families in every scenario; macro-F1 evaluation remains unweighted",
+  "implementation_revision": "2.4.3-pycaret-deadline-checkpoints",
+  "pycaret_execution": {
+    "evaluation_seconds": 180,
+    "comparison_fraction": 0.3,
+    "comparison_max_seconds": 480,
+    "minimum_start_seconds": 2
+  },
+  "tpot_execution": {
+    "workers": 2,
+    "worker_memory_gib": 4
+  }
+}

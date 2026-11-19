@@ -1,0 +1,43 @@
+name: lanna-automl-v2
+x-common: &common
+  user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1001}"
+  entrypoint: ["python"]
+  working_dir: /tmp
+  volumes:
+    - ${BENCHMARK_CODE_DIR:-.}:/code:ro
+    - ${BENCHMARK_DATA_DIR:-../data}:/data:ro
+    - ${BENCHMARK_OUTPUT_DIR:-./outputs}:/outputs
+  cpuset: "${BENCHMARK_CPUSET:-0-7}"
+  mem_limit: 16g
+  shm_size: 2g
+  init: true
+  environment:
+    BENCHMARK_CPUSET: "${BENCHMARK_CPUSET:-0-7}"
+    BENCHMARK_SLOT: "${BENCHMARK_SLOT:-0}"
+    HOME: /tmp
+    PYTHONPATH: /code
+    PYTHONUNBUFFERED: "1"
+    OMP_NUM_THREADS: "1"
+    OPENBLAS_NUM_THREADS: "1"
+    MKL_NUM_THREADS: "1"
+    NUMEXPR_NUM_THREADS: "1"
+    MPLBACKEND: Agg
+services:
+  prepare:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_PYCARET:-lanna-automl-pycaret:local}
+  autogluon:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_AUTOGLUON:-lanna-automl-autogluon:local}
+  tpot:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_TPOT:-lanna-automl-tpot:local}
+  pycaret:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_PYCARET:-lanna-automl-pycaret:local}
+  flaml:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_FLAML:-lanna-automl-flaml:local}
+  h2o:
+    <<: *common
+    image: ${BENCHMARK_IMAGE_H2O:-lanna-automl-h2o:local}
